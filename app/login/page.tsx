@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -63,12 +62,7 @@ export default function LoginPage() {
         >
           Masuk
         </button>
-        <p className="text-center text-sm text-gray-400">
-          Belum punya akun?{" "}
-          <Link href="/register" className="text-[#00FF88] hover:underline">
-            Daftar
-          </Link>
-        </p>
+
       </form>
     </div>
   )

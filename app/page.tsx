@@ -7,20 +7,12 @@ export default function Home() {
         CV <span className="text-[#00FF88]">Online</span>
       </h1>
       <p className="text-gray-400 mb-8">Buat CV digital modern dalam hitungan menit</p>
-      <div className="flex gap-4">
-        <Link
-          href="/login"
-          className="rounded-lg bg-[#00FF88] px-6 py-3 font-semibold text-black transition hover:bg-[#00cc6a]"
-        >
-          Masuk
-        </Link>
-        <Link
-          href="/register"
-          className="rounded-lg border border-gray-700 px-6 py-3 font-semibold text-white transition hover:border-[#00FF88]"
-        >
-          Daftar
-        </Link>
-      </div>
+      <Link
+        href="/login"
+        className="rounded-lg bg-[#00FF88] px-6 py-3 font-semibold text-black transition hover:bg-[#00cc6a]"
+      >
+        Masuk ke Dashboard
+      </Link>
     </div>
   )
 }
