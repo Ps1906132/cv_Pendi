@@ -1,12 +1,5 @@
-import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
+import { success } from "@/lib/response"
 
 export async function POST() {
-  const cookieStore = await cookies()
-  cookieStore.set("token", "", {
-    httpOnly: true,
-    maxAge: 0,
-    path: "/",
-  })
-  return NextResponse.json({ success: true })
+  return success(null, "Logout berhasil")
 }

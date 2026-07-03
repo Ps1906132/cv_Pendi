@@ -8,67 +8,126 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  username  String    @unique
-  password  String
-  profile   Profile?
-  createdAt DateTime  @default(now())
+  id         String    @id @default(uuid())
+  email      String    @unique
+  password   String
+  username   String    @unique
+  profile    Profile?
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("users")
 }
 
 model Profile {
-  id        String       @id @default(cuid())
-  userId    String       @unique
-  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name      String
-  headline  String       @default("")
-  photo     String       @default("")
-  education Education[]
-  skills    Skill[]
+  id         String       @id @default(uuid())
+  userId     String       @unique @map("user_id")
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName   String       @map("full_name")
+  headline   String       @default("")
+  about      String       @default("")
+  photo      String       @default("")
+  phone      String       @default("")
+  email      String       @default("")
+  address    String       @default("")
+  education  Education[]
+  skills     Skill[]
   experience Experience[]
-  documents Document[]
+  documents  Document[]
   socialLinks SocialLink[]
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  projects   Project[]
+  certificates Certificate[]
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+
+  @@map("profiles")
 }
 
 model Education {
-  id        String  @id @default(cuid())
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  school    String
-  major     String
-  year      String
+  id         String  @id @default(uuid())
+  profileId  String  @map("profile_id")
+  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  schoolName String  @map("school_name")
+  major      String
+  degree     String  @default("")
+  startYear  Int     @map("start_year")
+  endYear    Int     @map("end_year")
+  description String @default("")
+
+  @@index([profileId])
+  @@map("educations")
 }
 
 model Skill {
-  id        String  @id @default(cuid())
-  profileId String
-  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  name      String
+  id         String  @id @default(uuid())
+  profileId  String  @map("profile_id")
+  profile    Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  skillName  String  @map("skill_name")
+  level      Int     @default(0)
+
+  @@index([profileId])
+  @@map("skills")
 }
 
 model Experience {
-  id          String  @id @default(cuid())
-  profileId   String
+  id          String  @id @default(uuid())
+  profileId   String  @map("profile_id")
   profile     Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  company     String
+  companyName String  @map("company_name")
   position    String
-  year        String
+  startDate   DateTime @map("start_date")
+  endDate     DateTime? @map("end_date")
   description String  @default("")
+
+  @@index([profileId])
+  @@map("experiences")
 }
 
 model Document {
-  id        String  @id @default(cuid())
-  profileId String
+  id        String  @id @default(uuid())
+  profileId String  @map("profile_id")
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  label     String
+  title     String
   url       String
+
+  @@index([profileId])
+  @@map("documents")
 }
 
 model SocialLink {
-  id        String  @id @default(cuid())
-  profileId String
+  id        String  @id @default(uuid())
+  profileId String  @map("profile_id")
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
   platform  String
+  icon      String  @default("")
   url       String
+
+  @@index([profileId])
+  @@map("social_links")
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  profileId   String  @map("profile_id")
+  profile     Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title       String
+  description String  @default("")
+  githubUrl   String  @default("") @map("github_url")
+  demoUrl     String  @default("") @map("demo_url")
+
+  @@index([profileId])
+  @@map("projects")
+}
+
+model Certificate {
+  id             String  @id @default(uuid())
+  profileId      String  @map("profile_id")
+  profile        Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  title          String
+  issuer         String  @default("")
+  issueDate      DateTime @map("issue_date")
+  certificateUrl String  @default("") @map("certificate_url")
+
+  @@index([profileId])
+  @@map("certificates")
 }

@@ -1,26 +1,15 @@
-type Props = {
-  platform: string
-  url: string
-}
+type Props = { platform: string; url: string; icon?: string }
 
 const icons: Record<string, string> = {
-  GitHub: "🐙",
-  LinkedIn: "🔗",
-  YouTube: "▶️",
-  Instagram: "📸",
-  Facebook: "📘",
+  GitHub: "🐙", LinkedIn: "🔗", YouTube: "▶️", Instagram: "📸", Facebook: "📘", TikTok: "🎵", Website: "🌐",
 }
 
-export default function SocialIcons({ platform, url }: Props) {
+export default function SocialIcons({ platform, url, icon }: Props) {
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
+    <a href={url} target="_blank" rel="noopener noreferrer"
       className="flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900/50 px-5 py-3 text-gray-300 transition hover:border-[#00FF88] hover:text-[#00FF88] glow-hover"
-      title={platform}
-    >
-      <span className="text-lg">{icons[platform] || "🌐"}</span>
+      title={platform}>
+      <span className="text-lg">{icons[platform] || icon || "🌐"}</span>
       <span className="text-sm">{platform}</span>
     </a>
   )

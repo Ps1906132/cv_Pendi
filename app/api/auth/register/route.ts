@@ -1,31 +1,36 @@
-import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { hashPassword } from "@/lib/auth"
+import { success, error } from "@/lib/response"
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json()
+    const { email, username, password } = await req.json()
 
-    if (!username || !password) {
-      return NextResponse.json({ error: "Username dan password wajib diisi" }, { status: 400 })
+    if (!email || !username || !password) {
+      return error("Email, username, dan password wajib diisi", 400)
     }
 
-    const existing = await prisma.user.findUnique({ where: { username } })
-    if (existing) {
-      return NextResponse.json({ error: "Username sudah digunakan" }, { status: 400 })
+    const existingEmail = await prisma.user.findUnique({ where: { email } })
+    if (existingEmail) {
+      return error("Email sudah digunakan", 400)
+    }
+
+    const existingUsername = await prisma.user.findUnique({ where: { username } })
+    if (existingUsername) {
+      return error("Username sudah digunakan", 400)
     }
 
     const hashed = await hashPassword(password)
     const user = await prisma.user.create({
-      data: { username, password: hashed },
+      data: { email, username, password: hashed },
     })
 
     await prisma.profile.create({
-      data: { userId: user.id, name: username },
+      data: { userId: user.id, fullName: username },
     })
 
-    return NextResponse.json({ success: true })
+    return success(null, "Registrasi berhasil")
   } catch {
-    return NextResponse.json({ error: "Terjadi kesalahan" }, { status: 500 })
+    return error("Terjadi kesalahan", 500)
   }
 }

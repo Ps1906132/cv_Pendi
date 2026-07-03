@@ -1,28 +1,36 @@
-import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { getSession } from "@/lib/auth"
+import { getSessionFromHeader } from "@/lib/auth"
+import { success, error } from "@/lib/response"
 
-export async function GET() {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+export async function GET(req: Request) {
+  const session = getSessionFromHeader(req)
+  if (!session) return error("Unauthorized", 401)
 
   const profile = await prisma.profile.findUnique({
     where: { userId: session.userId },
-    include: { education: true, skills: true, experience: true, documents: true, socialLinks: true },
+    include: { education: true, skills: true, experience: true, documents: true, socialLinks: true, projects: true, certificates: true },
   })
 
-  return NextResponse.json(profile)
+  return success(profile)
 }
 
 export async function PUT(req: Request) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  const session = getSessionFromHeader(req)
+  if (!session) return error("Unauthorized", 401)
 
   const data = await req.json()
   const profile = await prisma.profile.update({
     where: { userId: session.userId },
-    data: { name: data.name, headline: data.headline, photo: data.photo },
+    data: {
+      fullName: data.full_name,
+      headline: data.headline,
+      about: data.about,
+      photo: data.photo,
+      phone: data.phone,
+      email: data.email,
+      address: data.address,
+    },
   })
 
-  return NextResponse.json(profile)
+  return success(profile, "Profile berhasil diupdate")
 }

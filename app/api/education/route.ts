@@ -1,28 +1,36 @@
-import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { getSession } from "@/lib/auth"
+import { getSessionFromHeader } from "@/lib/auth"
+import { success, error } from "@/lib/response"
 
-export async function GET() {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+export async function GET(req: Request) {
+  const session = getSessionFromHeader(req)
+  if (!session) return error("Unauthorized", 401)
 
   const profile = await prisma.profile.findUnique({ where: { userId: session.userId } })
-  if (!profile) return NextResponse.json({ error: "Profile not found" }, { status: 404 })
+  if (!profile) return error("Profile not found", 404)
 
   const items = await prisma.education.findMany({ where: { profileId: profile.id } })
-  return NextResponse.json(items)
+  return success(items)
 }
 
 export async function POST(req: Request) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  const session = getSessionFromHeader(req)
+  if (!session) return error("Unauthorized", 401)
 
   const profile = await prisma.profile.findUnique({ where: { userId: session.userId } })
-  if (!profile) return NextResponse.json({ error: "Profile not found" }, { status: 404 })
+  if (!profile) return error("Profile not found", 404)
 
   const data = await req.json()
   const item = await prisma.education.create({
-    data: { profileId: profile.id, school: data.school, major: data.major, year: data.year },
+    data: {
+      profileId: profile.id,
+      schoolName: data.school_name,
+      major: data.major,
+      degree: data.degree || "",
+      startYear: data.start_year,
+      endYear: data.end_year,
+      description: data.description || "",
+    },
   })
-  return NextResponse.json(item)
+  return success(item, "Pendidikan berhasil ditambahkan", 201)
 }
