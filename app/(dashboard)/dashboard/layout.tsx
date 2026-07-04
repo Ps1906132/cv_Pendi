@@ -18,6 +18,7 @@ const menuItems = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [ready, setReady] = useState(false)
+  const [username, setUsername] = useState("")
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -28,9 +29,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     fetch("/api/profile", {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => {
-        if (!res.ok) { localStorage.removeItem("token"); router.push("/login") }
-        else setReady(true)
+      .then(async (res) => {
+        if (!res.ok) { localStorage.removeItem("token"); router.push("/login"); return }
+        const json = await res.json()
+        if (json.success && json.data?.user?.username) {
+          setUsername(json.data.user.username)
+        }
+        setReady(true)
       })
       .catch(() => router.push("/login"))
   }, [router])
@@ -67,6 +72,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </Link>
           ))}
         </nav>
+        {username && (
+          <a
+            href={`/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-3 flex items-center gap-3 rounded-lg border border-[#00FF88]/30 bg-[#00FF88]/5 px-4 py-3 text-sm text-[#00FF88] transition hover:bg-[#00FF88]/10 hover:border-[#00FF88]"
+          >
+            <span>👁️</span>
+            <span>Lihat CV Publikasi</span>
+          </a>
+        )}
         <Link
           href="/logout"
           className="rounded-lg border border-gray-700 px-4 py-3 text-gray-400 transition hover:border-red-500 hover:text-red-500 text-center"

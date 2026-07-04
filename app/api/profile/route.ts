@@ -8,7 +8,10 @@ export async function GET(req: Request) {
 
   const profile = await prisma.profile.findUnique({
     where: { userId: session.userId },
-    include: { education: true, skills: true, experience: true, documents: true, socialLinks: true, projects: true, certificates: true },
+    include: {
+      education: true, skills: true, experience: true, documents: true, socialLinks: true, projects: true, certificates: true,
+      user: { select: { username: true } },
+    },
   })
 
   return success(profile)
