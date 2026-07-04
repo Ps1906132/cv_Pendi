@@ -66,6 +66,14 @@ export default function ProfilePage() {
           <label className="block text-sm text-gray-400 mb-1">URL Foto Profil</label>
           <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} placeholder="https://example.com/photo.jpg"
             className="w-full rounded-lg border border-gray-700 bg-transparent p-3 text-white outline-none focus:border-[#00FF88]" />
+          <p className="mt-1 text-xs text-gray-600">Link Google Drive otomatis dikonversi. Atau pakai link gambar langsung (imgur, postimages, dll)</p>
+          {photo && (
+            <div className="mt-3 flex items-center gap-3">
+              <img src={photo} alt="preview" className="h-14 w-14 rounded-full object-cover border border-gray-700"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = "none" }} />
+              <span className="text-xs text-gray-500">Preview</span>
+            </div>
+          )}
         </div>
         <div>
           <label className="block text-sm text-gray-400 mb-1">Nomor HP</label>

@@ -2,6 +2,13 @@ import { prisma } from "@/lib/prisma"
 import { getSessionFromHeader } from "@/lib/auth"
 import { success, error } from "@/lib/response"
 
+function toDirectImageUrl(url: string): string {
+  if (!url) return url
+  const match = url.match(/\/file\/d\/([^/]+)/)
+  if (match) return `https://drive.google.com/uc?export=view&id=${match[1]}`
+  return url
+}
+
 export async function GET(req: Request) {
   const session = getSessionFromHeader(req)
   if (!session) return error("Unauthorized", 401)
@@ -28,7 +35,7 @@ export async function PUT(req: Request) {
       fullName: data.full_name,
       headline: data.headline,
       about: data.about,
-      photo: data.photo,
+      photo: toDirectImageUrl(data.photo),
       phone: data.phone,
       email: data.email,
       address: data.address,
