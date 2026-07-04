@@ -58,6 +58,7 @@ Selain halaman publik, tersedia Dashboard Admin untuk mengelola seluruh data CV.
 
 ## Dashboard Admin
 
+- Register
 - Login
 - Edit Profil
 - Upload Foto
@@ -285,6 +286,8 @@ Users
 Endpoint utama
 
 ```
+POST /api/auth/register
+
 POST /api/auth/login
 
 POST /api/auth/logout
@@ -365,13 +368,15 @@ docs/
 Berisi:
 
 ```
-SRS.md
+1. SRS.md
 
-UI_SPECIFICATION.md
+2. UI.md
 
-DATABASE_DESIGN.md
+3. DATABASE.md
 
-API_DOCUMENTATION.md
+4. API.md
+
+5. STRUKTUR.md
 
 README.md
 ```
@@ -382,6 +387,7 @@ README.md
 
 Versi 1.0
 
+- Register
 - Login
 - Dashboard
 - CV Publik
