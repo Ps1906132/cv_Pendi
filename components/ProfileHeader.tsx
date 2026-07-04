@@ -11,14 +11,14 @@ export default function ProfileHeader({ name, headline, photo }: Props) {
   const imgSrc = toDirectImageUrl(photo)
   return (
     <div className="flex flex-col sm:flex-row gap-8 sm:gap-12 items-start">
-      <div className="shrink-0">
+      <div className="shrink-0 w-64">
         {imgSrc ? (
-          <div className="h-72 w-72 rounded-2xl border border-gray-800 shadow-xl shadow-black/40 overflow-hidden bg-gray-900">
+          <div className="rounded-2xl border border-gray-800 shadow-xl shadow-black/40 overflow-hidden bg-gray-900">
             <img src={imgSrc} alt={name}
-              className="h-full w-full object-cover" />
+              className="w-full h-auto object-cover" />
           </div>
         ) : (
-          <div className="flex h-72 w-72 items-center justify-center rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 text-7xl text-[#00FF88] font-bold">
+          <div className="flex h-80 w-64 items-center justify-center rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 text-7xl text-[#00FF88] font-bold">
             {name.charAt(0).toUpperCase()}
           </div>
         )}
