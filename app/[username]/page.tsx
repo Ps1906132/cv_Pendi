@@ -112,12 +112,14 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
               <div className="mb-6 flex items-center gap-3">
                 <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Dokumen</h2>
+                <span className="text-xs text-gray-600">(klik untuk lihat)</span>
               </div>
               <div className="flex flex-wrap gap-3">
                 {p.documents.map((doc) => (
                   <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer"
                     className="group relative rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-950/60 px-6 py-3 text-sm text-gray-300 transition-all duration-300 hover:border-[#00FF88]/40 hover:shadow-[0_0_20px_rgba(0,255,136,0.1)] hover:-translate-y-0.5">
                     <span className="relative">{doc.title}</span>
+                    <span className="ml-2 text-xs text-gray-600 group-hover:text-[#00FF88] transition-colors">↗</span>
                   </a>
                 ))}
               </div>
@@ -129,23 +131,24 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
               <div className="mb-6 flex items-center gap-3">
                 <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
                 <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Portfolio Project</h2>
+                <span className="text-xs text-gray-600">(klik link untuk lihat)</span>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {p.projects.map((proj) => (
                   <div key={proj.id} className="group rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-950/60 p-5 transition-all duration-300 hover:border-gray-700/80 hover:shadow-[0_0_25px_rgba(0,255,136,0.06)]">
                     <h3 className="font-semibold text-white group-hover:text-[#00FF88] transition-colors">{proj.title}</h3>
                     {proj.description && <p className="mt-2 text-sm text-gray-500">{proj.description}</p>}
-                    <div className="flex gap-3 mt-4">
+                    <div className="flex gap-4 mt-4">
                       {proj.githubUrl && (
                         <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer"
-                          className="text-xs text-gray-400 hover:text-[#00FF88] transition-colors">
-                          GitHub →
+                          className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#00FF88] transition-colors">
+                          <span className="text-[10px]">⎇</span> GitHub ↗
                         </a>
                       )}
                       {proj.demoUrl && (
                         <a href={proj.demoUrl} target="_blank" rel="noopener noreferrer"
-                          className="text-xs text-gray-400 hover:text-[#00FF88] transition-colors">
-                          Demo →
+                          className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#00FF88] transition-colors">
+                          <span className="text-[10px]">🔗</span> Demo ↗
                         </a>
                       )}
                     </div>
