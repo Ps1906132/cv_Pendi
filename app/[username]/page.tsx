@@ -238,7 +238,7 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
         <footer className="mt-24 border-t border-gray-800/50 pt-8 pb-12">
           <div className="flex flex-col items-center gap-2 text-center">
             <p className="text-sm text-gray-600">
-              Dibuat dengan <span className="text-[#00FF88]">CV Online Modern</span>
+              <span className="text-gray-500">Curriculum Vitae</span> <span className="text-[#00FF88]">Pendi</span>
             </p>
             <Link href="/" className="text-xs text-gray-700 hover:text-gray-500 transition-colors">
               cv-pendi-seven.vercel.app

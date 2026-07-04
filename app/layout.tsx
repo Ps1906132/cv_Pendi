@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "CV Online Modern",
+  title: "CV PENDI",
   description: "Buat CV online modern dengan mudah",
 }
 
