@@ -1,16 +1,19 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export default function ProfilePage() {
   const [fullName, setFullName] = useState("")
   const [headline, setHeadline] = useState("")
   const [about, setAbout] = useState("")
   const [photo, setPhoto] = useState("")
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState("")
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
   const [address, setAddress] = useState("")
   const [saved, setSaved] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -24,6 +27,7 @@ export default function ProfilePage() {
           setHeadline(json.data.headline || "")
           setAbout(json.data.about || "")
           setPhoto(json.data.photo || "")
+          setPhotoPreview(json.data.photo || "")
           setPhone(json.data.phone || "")
           setEmail(json.data.email || "")
           setAddress(json.data.address || "")
@@ -31,13 +35,36 @@ export default function ProfilePage() {
       })
   }, [])
 
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setPhotoFile(file)
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result as string
+      setPhotoPreview(result)
+    }
+    reader.readAsDataURL(file)
+  }
+
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     const token = localStorage.getItem("token")
+    const payload: Record<string, string> = { full_name: fullName, headline, about, phone, email, address }
+    if (photoFile) {
+      const reader = new FileReader()
+      const base64 = await new Promise<string>((resolve) => {
+        reader.onload = () => resolve(reader.result as string)
+        reader.readAsDataURL(photoFile)
+      })
+      payload.photo = base64
+    } else {
+      payload.photo = photo
+    }
     await fetch("/api/profile", {
       method: "PUT",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ full_name: fullName, headline, about, photo, phone, email, address }),
+      body: JSON.stringify(payload),
     })
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
@@ -63,17 +90,20 @@ export default function ProfilePage() {
             className="w-full rounded-lg border border-gray-700 bg-transparent p-3 text-white outline-none focus:border-[#00FF88]" />
         </div>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">URL Foto Profil</label>
-          <input type="text" value={photo} onChange={(e) => setPhoto(e.target.value)} placeholder="https://example.com/photo.jpg"
-            className="w-full rounded-lg border border-gray-700 bg-transparent p-3 text-white outline-none focus:border-[#00FF88]" />
-          <p className="mt-1 text-xs text-gray-600">Link Google Drive otomatis dikonversi. Atau pakai link gambar langsung (imgur, postimages, dll)</p>
-          {photo && (
-            <div className="mt-3 flex items-center gap-3">
-              <img src={photo} alt="preview" className="h-14 w-14 rounded-full object-cover border border-gray-700"
+          <label className="block text-sm text-gray-400 mb-1">Foto Profil</label>
+          <div className="flex items-center gap-4">
+            {photoPreview && (
+              <img src={photoPreview} alt="preview"
+                className="h-16 w-16 rounded-full object-cover border border-gray-700"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = "none" }} />
-              <span className="text-xs text-gray-500">Preview</span>
-            </div>
-          )}
+            )}
+            <button type="button" onClick={() => fileRef.current?.click()}
+              className="rounded-lg border border-gray-700 px-4 py-2 text-sm text-gray-300 hover:border-[#00FF88] hover:text-[#00FF88] transition">
+              Pilih Foto
+            </button>
+          </div>
+          <input ref={fileRef} type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+          <p className="mt-1 text-xs text-gray-600">Pilih file gambar dari komputer. Maks 2MB.</p>
         </div>
         <div>
           <label className="block text-sm text-gray-400 mb-1">Nomor HP</label>
