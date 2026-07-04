@@ -39,21 +39,19 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
         <div className="mt-16 space-y-16">
           {p.about && (
             <section>
-              <div className="mb-6 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Tentang Saya</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-4 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Tentang Saya</h2>
               </div>
-              <p className="text-gray-400 leading-relaxed text-center max-w-xl mx-auto">{p.about}</p>
+              <p className="text-gray-400 leading-relaxed">{p.about}</p>
             </section>
           )}
 
           {p.education.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Pendidikan</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Pendidikan</h2>
               </div>
               <div className="space-y-4">
                 {p.education.map((edu) => (
@@ -76,12 +74,11 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.skills.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Keahlian</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Keahlian</h2>
               </div>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap gap-3">
                 {p.skills.map((skill) => (
                   <SkillBadge key={skill.id} name={skill.skillName} level={skill.level} />
                 ))}
@@ -91,10 +88,9 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.experience.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Pengalaman Kerja</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Pengalaman Kerja</h2>
               </div>
               <div className="space-y-4">
                 {p.experience.map((exp) => (
@@ -113,12 +109,11 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.documents.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Dokumen</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Dokumen</h2>
               </div>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap gap-3">
                 {p.documents.map((doc) => (
                   <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer"
                     className="group relative rounded-xl border border-gray-800 bg-gradient-to-br from-gray-900/60 to-gray-950/60 px-6 py-3 text-sm text-gray-300 transition-all duration-300 hover:border-[#00FF88]/40 hover:shadow-[0_0_20px_rgba(0,255,136,0.1)] hover:-translate-y-0.5">
@@ -131,10 +126,9 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.projects.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Portfolio Project</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Portfolio Project</h2>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {p.projects.map((proj) => (
@@ -163,10 +157,9 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.certificates.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Sertifikat</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Sertifikat</h2>
               </div>
               <div className="space-y-4">
                 {p.certificates.map((cert) => (
@@ -194,12 +187,11 @@ export default async function PublicCVPage({ params }: { params: Promise<{ usern
 
           {p.socialLinks.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
-                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Social Media</h2>
-                <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gray-800 to-transparent" />
+              <div className="mb-6 flex items-center gap-3">
+                <div className="h-5 w-1 rounded-full bg-[#00FF88]" />
+                <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-400">Social Media</h2>
               </div>
-              <div className="flex flex-wrap justify-center gap-3">
+              <div className="flex flex-wrap gap-3">
                 {p.socialLinks.map((link) => (
                   <SocialIcons key={link.id} platform={link.platform} url={link.url} icon={link.icon} />
                 ))}
